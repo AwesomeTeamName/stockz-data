@@ -1,3 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'yql-query'
+gem 'yql'
+gem 'json'
+gem 'data_mapper'
+gem 'sqlite3'
