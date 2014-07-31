@@ -1,25 +1,25 @@
+#!/usr/bin/env ruby
+
 require 'yql'
 require 'json'
 
-def load(symbols, startDate, endDate)
-	symbol_str = ""
+def load(symbol, startDate, endDate)
 
-	symbols.each_with_index do |symbol, i|
-		symbol_str += "symbol = \"#{symbol}\""
-
-		if i < symbols.length - 1
-			symbol_str += " or "
-		end
-	end
+	#symbols.each_with_index do |symbol, i|
+	#	symbol_str += "symbol = \"#{symbol}\""
+	#	if i < symbols.length - 1
+	#		symbol_str += " or "
+	#	end
+	#endn	
 
 	yql = Yql::Client.new
 	query = Yql::QueryBuilder.new('yahoo.finance.historicaldata')
-	query.conditions = "(#{symbol_str}) and startDate=\"#{startDate}\" and endDate=\"#{endDate}\""
+	query.conditions = "symbol=\"#{symbol}\" and startDate=\"#{startDate}\" and endDate=\"#{endDate}\""
 	yql.query = query
 	yql.format = "json"
-	res = yql.get.show.to_s
-	JSON.parse(res)
-
+	yql.get.show.to_s
 end
 
-load(["GOOG", "AAPL"], '2009-09-11', '2010-03-11')
+
+
+puts load(ARGV[0], ARGV[1], ARGV[2])
